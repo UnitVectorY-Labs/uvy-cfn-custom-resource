@@ -48,6 +48,9 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 
 		JsonNode inputNode = UvyJacksonHelper.MAPPER.readTree(inputStream);
 
+		// Debugging
+		System.out.println(UvyJacksonHelper.MAPPER.writeValueAsString(inputNode));
+
 		// The request type is set by the AWS CloudFormation stack operation
 		// (create-stack, update-stack, or delete-stack) that was initiated by the
 		// template developer for the stack that contains the custom resource.
