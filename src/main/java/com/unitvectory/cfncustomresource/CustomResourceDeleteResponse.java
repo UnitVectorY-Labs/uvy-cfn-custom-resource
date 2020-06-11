@@ -45,10 +45,22 @@ public class CustomResourceDeleteResponse {
 			this.responseReason = responseReason;
 		}
 
+		/**
+		 * Create a new successful response
+		 * 
+		 * @return the builder
+		 */
 		public static Builder createSuccess() {
 			return new Builder(ResponseStatus.SUCCESS, null);
 		}
 
+		/**
+		 * Create a new error response
+		 * 
+		 * @param responseReason
+		 *            required error reason
+		 * @return the builder
+		 */
 		public static Builder createError(String responseReason) {
 			if (responseReason == null || responseReason.trim().length() == 0) {
 				throw new IllegalArgumentException("Reason is required");
@@ -57,6 +69,11 @@ public class CustomResourceDeleteResponse {
 			return new Builder(ResponseStatus.FAILED, responseReason);
 		}
 
+		/**
+		 * Build the response.
+		 * 
+		 * @return the response
+		 */
 		public CustomResourceDeleteResponse build() {
 			return new CustomResourceDeleteResponse(responseStatus, responseReason);
 		}

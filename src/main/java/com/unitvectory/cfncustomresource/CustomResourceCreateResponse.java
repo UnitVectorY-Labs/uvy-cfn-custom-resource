@@ -80,6 +80,12 @@ public class CustomResourceCreateResponse {
 			this.dataString = new HashMap<String, String>();
 		}
 
+		/**
+		 * Create a new successful response
+		 * 
+		 * @param physicalResourceId
+		 * @return the builder
+		 */
 		public static Builder createSuccess(String physicalResourceId) {
 			if (physicalResourceId == null || physicalResourceId.trim().length() == 0) {
 				throw new IllegalArgumentException("PhysicalResourceId is required");
@@ -88,6 +94,14 @@ public class CustomResourceCreateResponse {
 			return new Builder(ResponseStatus.SUCCESS, null, physicalResourceId);
 		}
 
+		/**
+		 * Create a new error response
+		 * 
+		 * @param physicalResourceId
+		 * @param responseReason
+		 *            required error reason
+		 * @return the builder
+		 */
 		public static Builder createError(String physicalResourceId, String responseReason) {
 			if (physicalResourceId == null || physicalResourceId.trim().length() == 0) {
 				throw new IllegalArgumentException("PhysicalResourceId is required");
@@ -98,6 +112,17 @@ public class CustomResourceCreateResponse {
 			return new Builder(ResponseStatus.FAILED, responseReason, physicalResourceId);
 		}
 
+		/**
+		 * Indicates whether to mask the output of the custom resource when retrieved by
+		 * using the Fn::GetAtt function. If set to true, all returned values are masked
+		 * with asterisks (*****). The default value is false. For more information
+		 * about using NoEcho to mask sensitive information, see the Do Not Embed
+		 * Credentials in Your Templates best practice.
+		 * 
+		 * Only allowed to be used on successful responses.
+		 * 
+		 * @return the builder
+		 */
 		public Builder withNoEcho() {
 			if (!ResponseStatus.SUCCESS.equals(this.responseStatus)) {
 				throw new IllegalStateException("Only allowed for SUCCESS");
@@ -107,6 +132,22 @@ public class CustomResourceCreateResponse {
 			return this;
 		}
 
+		/**
+		 * The custom resource provider-defined name-value pairs to send with the
+		 * response. You can access the values provided here by name in the template
+		 * with Fn::GetAtt. Important: If the name-value pairs contain sensitive
+		 * information, you should use the NoEcho field to mask the output of the custom
+		 * resource. Otherwise, the values are visible through APIs that surface
+		 * property values (such as DescribeStackEvents).
+		 * 
+		 * Only allowed to be used on successful responses.
+		 * 
+		 * @param key
+		 *            the property name
+		 * @param value
+		 *            the property value
+		 * @return the builder
+		 */
 		public Builder withDataString(String key, String value) {
 			if (!ResponseStatus.SUCCESS.equals(this.responseStatus)) {
 				throw new IllegalStateException("Only allowed for SUCCESS");
@@ -125,6 +166,11 @@ public class CustomResourceCreateResponse {
 			return this;
 		}
 
+		/**
+		 * Build the response.
+		 * 
+		 * @return the response
+		 */
 		public CustomResourceCreateResponse build() {
 			Map<String, String> dataStringMap = new TreeMap<String, String>();
 			dataStringMap.putAll(this.dataString);

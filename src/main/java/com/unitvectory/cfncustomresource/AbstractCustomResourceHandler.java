@@ -48,9 +48,6 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 
 		JsonNode inputNode = UvyJacksonHelper.MAPPER.readTree(inputStream);
 
-		// Debugging
-		System.out.println(UvyJacksonHelper.MAPPER.writeValueAsString(inputNode));
-
 		// The request type is set by the AWS CloudFormation stack operation
 		// (create-stack, update-stack, or delete-stack) that was initiated by the
 		// template developer for the stack that contains the custom resource.
@@ -320,13 +317,43 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 		cloudFormationResult.putFile(responseURL, json);
 	}
 
+	/**
+	 * Process the Create signal from CloudFormation.
+	 * 
+	 * @param resourceType
+	 * @param logicalResourceId
+	 * @param stackId
+	 * @param customResourceRequestProperties
+	 * @return the response
+	 */
 	public abstract CustomResourceCreateResponse processCreate(String resourceType, String logicalResourceId,
 			String stackId, CustomResourceRequestProperties customResourceRequestProperties);
 
+	/**
+	 * Process the Update signal from CloudFormation.
+	 * 
+	 * @param physicalResourceId
+	 * @param resourceType
+	 * @param logicalResourceId
+	 * @param stackId
+	 * @param customResourceRequestProperties
+	 * @param customResourceRequestOldProperties
+	 * @return the response
+	 */
 	public abstract CustomResourceUpdateResponse processUpdate(String physicalResourceId, String resourceType,
 			String logicalResourceId, String stackId, CustomResourceRequestProperties customResourceRequestProperties,
 			CustomResourceRequestProperties customResourceRequestOldProperties);
 
+	/**
+	 * Process the Delete signal from CloudFormation.
+	 * 
+	 * @param physicalResourceId
+	 * @param resourceType
+	 * @param logicalResourceId
+	 * @param stackId
+	 * @param customResourceRequestProperties
+	 * @return the response
+	 */
 	public abstract CustomResourceDeleteResponse processDelete(String physicalResourceId, String resourceType,
 			String logicalResourceId, String stackId, CustomResourceRequestProperties customResourceRequestProperties);
 }

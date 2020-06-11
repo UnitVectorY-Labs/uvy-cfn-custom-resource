@@ -17,6 +17,10 @@ package com.unitvectory.cfncustomresource;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+/**
+ * Provides access to the custom resource properties.
+ *
+ */
 public class CustomResourceRequestProperties {
 
 	private JsonNode resourceProperties;
@@ -29,6 +33,12 @@ public class CustomResourceRequestProperties {
 		this.resourceProperties = resourceProperties;
 	}
 
+	/**
+	 * Get a string property by name.
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public String getStringProperty(String key) {
 		if (this.resourceProperties == null) {
 			return null;

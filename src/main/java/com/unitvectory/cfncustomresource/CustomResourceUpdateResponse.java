@@ -70,10 +70,22 @@ public class CustomResourceUpdateResponse {
 			this.dataString = new HashMap<String, String>();
 		}
 
+		/**
+		 * Create a new successful response
+		 * 
+		 * @return the builder
+		 */
 		public static Builder createSuccess() {
 			return new Builder(ResponseStatus.SUCCESS, null);
 		}
 
+		/**
+		 * Create a new error response
+		 * 
+		 * @param responseReason
+		 *            required error reason
+		 * @return the builder
+		 */
 		public static Builder createError(String responseReason) {
 			if (responseReason == null || responseReason.trim().length() == 0) {
 				throw new IllegalArgumentException("Reason is required");
@@ -82,6 +94,17 @@ public class CustomResourceUpdateResponse {
 			return new Builder(ResponseStatus.FAILED, responseReason);
 		}
 
+		/**
+		 * Indicates whether to mask the output of the custom resource when retrieved by
+		 * using the Fn::GetAtt function. If set to true, all returned values are masked
+		 * with asterisks (*****). The default value is false. For more information
+		 * about using NoEcho to mask sensitive information, see the Do Not Embed
+		 * Credentials in Your Templates best practice.
+		 * 
+		 * Only allowed to be used on successful responses.
+		 * 
+		 * @return the builder
+		 */
 		public Builder withNoEcho() {
 			if (!ResponseStatus.SUCCESS.equals(this.responseStatus)) {
 				throw new IllegalStateException("Only allowed for SUCCESS");
@@ -91,6 +114,22 @@ public class CustomResourceUpdateResponse {
 			return this;
 		}
 
+		/**
+		 * The custom resource provider-defined name-value pairs to send with the
+		 * response. You can access the values provided here by name in the template
+		 * with Fn::GetAtt. Important: If the name-value pairs contain sensitive
+		 * information, you should use the NoEcho field to mask the output of the custom
+		 * resource. Otherwise, the values are visible through APIs that surface
+		 * property values (such as DescribeStackEvents).
+		 * 
+		 * Only allowed to be used on successful responses.
+		 * 
+		 * @param key
+		 *            the property name
+		 * @param value
+		 *            the property value
+		 * @return the builder
+		 */
 		public Builder withDataString(String key, String value) {
 			if (!ResponseStatus.SUCCESS.equals(this.responseStatus)) {
 				throw new IllegalStateException("Only allowed for SUCCESS");
@@ -109,6 +148,11 @@ public class CustomResourceUpdateResponse {
 			return this;
 		}
 
+		/**
+		 * Build the response.
+		 * 
+		 * @return the response
+		 */
 		public CustomResourceUpdateResponse build() {
 			Map<String, String> dataStringMap = new TreeMap<String, String>();
 			dataStringMap.putAll(this.dataString);
