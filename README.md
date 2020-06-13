@@ -17,7 +17,7 @@ The class provides three abstract methods for the custom resource the opportunit
 Builders are provided to construct responses simplifying the implementation.
 The library takes care of parsing the request, forming the response, and sending the outcome to S3 for processing by CloudFormation.
 
-```
+```java
 public class ExampleHandler extends AbstractCustomResourceHandler {
 
 	@Override
