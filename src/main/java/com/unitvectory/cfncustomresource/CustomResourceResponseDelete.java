@@ -15,13 +15,13 @@
  */
 package com.unitvectory.cfncustomresource;
 
-public class CustomResourceDeleteResponse {
+public class CustomResourceResponseDelete {
 
 	private final ResponseStatus responseStatus;
 
 	private final String responseReason;
 
-	private CustomResourceDeleteResponse(ResponseStatus responseStatus, String responseReason) {
+	private CustomResourceResponseDelete(ResponseStatus responseStatus, String responseReason) {
 		this.responseStatus = responseStatus;
 		this.responseReason = responseReason;
 	}
@@ -74,8 +74,8 @@ public class CustomResourceDeleteResponse {
 		 * 
 		 * @return the response
 		 */
-		public CustomResourceDeleteResponse build() {
-			return new CustomResourceDeleteResponse(responseStatus, responseReason);
+		public CustomResourceResponseDelete build() {
+			return new CustomResourceResponseDelete(responseStatus, responseReason);
 		}
 	}
 }

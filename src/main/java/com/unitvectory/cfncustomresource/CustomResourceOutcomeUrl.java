@@ -15,15 +15,27 @@
  */
 package com.unitvectory.cfncustomresource;
 
-public interface CloudFormationResult {
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-	/**
-	 * Upload the file to S3 for CloudFormation to process.
-	 * 
-	 * @param responseURL
-	 *            the signed S3 URL provided by CloudFormation
-	 * @param responseJson
-	 *            the JSON response to upload
-	 */
-	void putFile(String responseURL, String responseJson);
+class CustomResourceOutcomeUrl implements CustomResourceOutcome {
+
+	CustomResourceOutcomeUrl() {
+	}
+
+	@Override
+	public void putFile(String responseURL, String responseJson) {
+		try {
+			URL url = new URL(responseURL);
+			HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
+			httpConnection.setRequestMethod("PUT");
+			OutputStreamWriter out = new OutputStreamWriter(httpConnection.getOutputStream());
+			out.write(responseJson);
+			out.close();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }

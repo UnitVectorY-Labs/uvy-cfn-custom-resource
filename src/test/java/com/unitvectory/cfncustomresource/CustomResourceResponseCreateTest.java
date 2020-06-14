@@ -7,11 +7,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class CustomResourceCreateResponseTest {
+public class CustomResourceResponseCreateTest {
 
 	@Test
 	public void successTest() {
-		CustomResourceCreateResponse response = CustomResourceCreateResponse.Builder.createSuccess("foo").build();
+		CustomResourceResponseCreate response = CustomResourceResponseCreate.Builder.createSuccess("foo").build();
 		assertEquals(ResponseStatus.SUCCESS, response.getResponseStatus());
 		assertEquals("foo", response.getResponsePhysicalResourceId());
 		assertNull(response.getResponseReason());
@@ -22,7 +22,7 @@ public class CustomResourceCreateResponseTest {
 
 	@Test
 	public void successDataTest() {
-		CustomResourceCreateResponse response = CustomResourceCreateResponse.Builder.createSuccess("foo")
+		CustomResourceResponseCreate response = CustomResourceResponseCreate.Builder.createSuccess("foo")
 				.withDataString("a", "1").withDataString("b", "2").build();
 		assertEquals(ResponseStatus.SUCCESS, response.getResponseStatus());
 		assertEquals("foo", response.getResponsePhysicalResourceId());
@@ -37,7 +37,7 @@ public class CustomResourceCreateResponseTest {
 
 	@Test
 	public void successNoEchoTest() {
-		CustomResourceCreateResponse response = CustomResourceCreateResponse.Builder.createSuccess("foo").withNoEcho()
+		CustomResourceResponseCreate response = CustomResourceResponseCreate.Builder.createSuccess("foo").withNoEcho()
 				.build();
 		assertEquals(ResponseStatus.SUCCESS, response.getResponseStatus());
 		assertEquals("foo", response.getResponsePhysicalResourceId());
@@ -49,7 +49,7 @@ public class CustomResourceCreateResponseTest {
 
 	@Test
 	public void errorTest() {
-		CustomResourceCreateResponse response = CustomResourceCreateResponse.Builder.createError("foo", "failure")
+		CustomResourceResponseCreate response = CustomResourceResponseCreate.Builder.createError("foo", "failure")
 				.build();
 		assertEquals(ResponseStatus.FAILED, response.getResponseStatus());
 		assertEquals("foo", response.getResponsePhysicalResourceId());

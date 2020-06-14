@@ -28,15 +28,15 @@ import org.json.JSONTokener;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 
-public abstract class AbstractCustomResourceHandler implements RequestStreamHandler {
+public abstract class CustomResourceHandler implements RequestStreamHandler {
 
-	private final CloudFormationResult cloudFormationResult;
+	private final CustomResourceOutcome cloudFormationResult;
 
-	public AbstractCustomResourceHandler() {
-		this.cloudFormationResult = new CloudFormationResultClient();
+	public CustomResourceHandler() {
+		this.cloudFormationResult = new CustomResourceOutcomeUrl();
 	}
 
-	public AbstractCustomResourceHandler(CloudFormationResult cloudFormationResult) {
+	public CustomResourceHandler(CustomResourceOutcome cloudFormationResult) {
 		if (cloudFormationResult == null) {
 			throw new IllegalArgumentException("cloudFormationResult must not be null");
 		}
@@ -122,7 +122,7 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 		if (RequestType.Create.equals(requestType)) {
 			// Perform the actual request
 
-			CustomResourceCreateResponse response = null;
+			CustomResourceResponseCreate response = null;
 			boolean exception = false;
 			try {
 				response = this.processCreate(resourceType, logicalResourceId, stackId,
@@ -155,7 +155,7 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 
 		} else if (RequestType.Update.equals(requestType)) {
 
-			CustomResourceUpdateResponse response = null;
+			CustomResourceResponseUpdate response = null;
 			boolean exception = false;
 			try {
 				response = processUpdate(physicalResourceId, resourceType, logicalResourceId, stackId,
@@ -187,7 +187,7 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 
 		} else if (RequestType.Delete.equals(requestType)) {
 
-			CustomResourceDeleteResponse response = null;
+			CustomResourceResponseDelete response = null;
 			boolean exception = false;
 			try {
 				response = processDelete(physicalResourceId, resourceType, logicalResourceId, stackId,
@@ -328,7 +328,7 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 	 * @param customResourceRequestProperties
 	 * @return the response
 	 */
-	public abstract CustomResourceCreateResponse processCreate(String resourceType, String logicalResourceId,
+	public abstract CustomResourceResponseCreate processCreate(String resourceType, String logicalResourceId,
 			String stackId, CustomResourceRequestProperties customResourceRequestProperties);
 
 	/**
@@ -342,7 +342,7 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 	 * @param customResourceRequestOldProperties
 	 * @return the response
 	 */
-	public abstract CustomResourceUpdateResponse processUpdate(String physicalResourceId, String resourceType,
+	public abstract CustomResourceResponseUpdate processUpdate(String physicalResourceId, String resourceType,
 			String logicalResourceId, String stackId, CustomResourceRequestProperties customResourceRequestProperties,
 			CustomResourceRequestProperties customResourceRequestOldProperties);
 
@@ -356,6 +356,6 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 	 * @param customResourceRequestProperties
 	 * @return the response
 	 */
-	public abstract CustomResourceDeleteResponse processDelete(String physicalResourceId, String resourceType,
+	public abstract CustomResourceResponseDelete processDelete(String physicalResourceId, String resourceType,
 			String logicalResourceId, String stackId, CustomResourceRequestProperties customResourceRequestProperties);
 }

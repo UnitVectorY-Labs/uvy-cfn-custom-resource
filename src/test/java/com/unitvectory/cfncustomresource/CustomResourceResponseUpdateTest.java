@@ -7,11 +7,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class CustomResourceUpdateResponseTest {
+public class CustomResourceResponseUpdateTest {
 
 	@Test
 	public void successTest() {
-		CustomResourceUpdateResponse response = CustomResourceUpdateResponse.Builder.createSuccess().build();
+		CustomResourceResponseUpdate response = CustomResourceResponseUpdate.Builder.createSuccess().build();
 		assertEquals(ResponseStatus.SUCCESS, response.getResponseStatus());
 		assertNull(response.getResponseReason());
 		assertNull(response.getResponseNoEcho());
@@ -21,7 +21,7 @@ public class CustomResourceUpdateResponseTest {
 
 	@Test
 	public void successDataTest() {
-		CustomResourceUpdateResponse response = CustomResourceUpdateResponse.Builder.createSuccess()
+		CustomResourceResponseUpdate response = CustomResourceResponseUpdate.Builder.createSuccess()
 				.withDataString("a", "1").withDataString("b", "2").build();
 		assertEquals(ResponseStatus.SUCCESS, response.getResponseStatus());
 		assertNull(response.getResponseReason());
@@ -35,7 +35,7 @@ public class CustomResourceUpdateResponseTest {
 
 	@Test
 	public void successNoEchoTest() {
-		CustomResourceUpdateResponse response = CustomResourceUpdateResponse.Builder.createSuccess().withNoEcho()
+		CustomResourceResponseUpdate response = CustomResourceResponseUpdate.Builder.createSuccess().withNoEcho()
 				.build();
 		assertEquals(ResponseStatus.SUCCESS, response.getResponseStatus());
 		assertNull(response.getResponseReason());
@@ -46,7 +46,7 @@ public class CustomResourceUpdateResponseTest {
 
 	@Test
 	public void errorTest() {
-		CustomResourceUpdateResponse response = CustomResourceUpdateResponse.Builder.createError("failure").build();
+		CustomResourceResponseUpdate response = CustomResourceResponseUpdate.Builder.createError("failure").build();
 		assertEquals(ResponseStatus.FAILED, response.getResponseStatus());
 		assertEquals("failure", response.getResponseReason());
 		assertNull(response.getResponseNoEcho());

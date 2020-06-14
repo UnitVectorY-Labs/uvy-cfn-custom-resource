@@ -5,18 +5,18 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-public class CustomResourceDeleteResponseTest {
+public class CustomResourceResponseDeleteTest {
 
 	@Test
 	public void successTest() {
-		CustomResourceDeleteResponse response = CustomResourceDeleteResponse.Builder.createSuccess().build();
+		CustomResourceResponseDelete response = CustomResourceResponseDelete.Builder.createSuccess().build();
 		assertEquals(ResponseStatus.SUCCESS, response.getResponseStatus());
 		assertNull(response.getResponseReason());
 	}
 
 	@Test
 	public void errorTest() {
-		CustomResourceDeleteResponse response = CustomResourceDeleteResponse.Builder.createError("failure").build();
+		CustomResourceResponseDelete response = CustomResourceResponseDelete.Builder.createError("failure").build();
 		assertEquals(ResponseStatus.FAILED, response.getResponseStatus());
 		assertEquals("failure", response.getResponseReason());
 	}

@@ -12,16 +12,16 @@ A custom resource can be used to provide dynamic values to a CloudFormation temp
 A custom resource can also provision or manage resources outside of AWS from third parties or your own applications.
 Alternatively, the custom resource can call AWS APIs to provision AWS resources that do not support CloudFormation or do not support certain actions with CloudFormation.
 
-To implement a custom resource, the `AbstractCustomResourceHandler` is extend and implemented so it can be used as the handler for a Lambda function.
+To implement a custom resource, the `CustomResourceHandler` is extend and implemented so it can be used as the handler for a Lambda function.
 The class provides three abstract methods for the custom resource the opportunity to handle the `processCreate`, `processUpdate`, and `processDelete` life cycle signals provided by CloudFormation.
 Builders are provided to construct responses simplifying the implementation.
 The library takes care of parsing the request, forming the response, and sending the outcome to S3 for processing by CloudFormation.
 
 ```java
-public class ExampleHandler extends AbstractCustomResourceHandler {
+public class ExampleHandler extends CustomResourceHandler {
 
 	@Override
-	public CustomResourceCreateResponse processCreate(String resourceType, String logicalResourceId, String stackId,
+	public CustomResourceResponseCreate processCreate(String resourceType, String logicalResourceId, String stackId,
 			CustomResourceRequestProperties customResourceRequestProperties) {
 
 		String physicalResourceId = UUID.randomUUID().toString();
@@ -29,27 +29,27 @@ public class ExampleHandler extends AbstractCustomResourceHandler {
 		// TODO: Implement your create logic here
 
 		// Return success
-		return CustomResourceCreateResponse.Builder.createSuccess(physicalResourceId).build();
+		return CustomResourceResponseCreate.Builder.createSuccess(physicalResourceId).build();
 	}
 
 	@Override
-	public CustomResourceUpdateResponse processUpdate(String physicalResourceId, String resourceType,
+	public CustomResourceResponseUpdate processUpdate(String physicalResourceId, String resourceType,
 			String logicalResourceId, String stackId, CustomResourceRequestProperties customResourceRequestProperties,
 			CustomResourceRequestProperties customResourceRequestOldProperties) {
 
 		// TODO: Implement your update logic here
 
 		// Return success
-		return CustomResourceUpdateResponse.Builder.createSuccess().build();
+		return CustomResourceResponseUpdate.Builder.createSuccess().build();
 	}
 
 	@Override
-	public CustomResourceDeleteResponse processDelete(String physicalResourceId, String resourceType,
+	public CustomResourceResponseDelete processDelete(String physicalResourceId, String resourceType,
 			String logicalResourceId, String stackId, CustomResourceRequestProperties customResourceRequestProperties) {
 		// TODO: Implement your delete logic here
 
 		// Return success
-		return CustomResourceDeleteResponse.Builder.createSuccess().build();
+		return CustomResourceResponseDelete.Builder.createSuccess().build();
 	}
 }
 ```

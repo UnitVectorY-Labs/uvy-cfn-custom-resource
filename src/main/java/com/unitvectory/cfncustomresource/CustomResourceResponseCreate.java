@@ -20,20 +20,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class CustomResourceUpdateResponse {
+public class CustomResourceResponseCreate {
 
 	private final ResponseStatus responseStatus;
 
 	private final String responseReason;
 
+	private final String responsePhysicalResourceId;
+
 	private final Boolean responseNoEcho;
 
 	private final Map<String, String> dataString;
 
-	private CustomResourceUpdateResponse(ResponseStatus responseStatus, String responseReason, Boolean responseNoEcho,
-			Map<String, String> dataString) {
+	private CustomResourceResponseCreate(ResponseStatus responseStatus, String responseReason,
+			String responsePhysicalResourceId, Boolean responseNoEcho, Map<String, String> dataString) {
 		this.responseStatus = responseStatus;
 		this.responseReason = responseReason;
+		this.responsePhysicalResourceId = responsePhysicalResourceId;
 		this.responseNoEcho = responseNoEcho;
 		this.dataString = dataString;
 	}
@@ -44,6 +47,10 @@ public class CustomResourceUpdateResponse {
 
 	final String getResponseReason() {
 		return responseReason;
+	}
+
+	final String getResponsePhysicalResourceId() {
+		return responsePhysicalResourceId;
 	}
 
 	final Boolean getResponseNoEcho() {
@@ -60,38 +67,49 @@ public class CustomResourceUpdateResponse {
 
 		private String responseReason;
 
+		private String responsePhysicalResourceId;
+
 		private Boolean responseNoEcho;
 
 		private Map<String, String> dataString;
 
-		private Builder(ResponseStatus responseStatus, String responseReason) {
+		private Builder(ResponseStatus responseStatus, String responseReason, String physicalResourceId) {
 			this.responseStatus = responseStatus;
 			this.responseReason = responseReason;
+			this.responsePhysicalResourceId = physicalResourceId;
 			this.dataString = new HashMap<String, String>();
 		}
 
 		/**
 		 * Create a new successful response
 		 * 
+		 * @param physicalResourceId
 		 * @return the builder
 		 */
-		public static Builder createSuccess() {
-			return new Builder(ResponseStatus.SUCCESS, null);
+		public static Builder createSuccess(String physicalResourceId) {
+			if (physicalResourceId == null || physicalResourceId.trim().length() == 0) {
+				throw new IllegalArgumentException("PhysicalResourceId is required");
+			}
+
+			return new Builder(ResponseStatus.SUCCESS, null, physicalResourceId);
 		}
 
 		/**
 		 * Create a new error response
 		 * 
+		 * @param physicalResourceId
 		 * @param responseReason
 		 *            required error reason
 		 * @return the builder
 		 */
-		public static Builder createError(String responseReason) {
-			if (responseReason == null || responseReason.trim().length() == 0) {
+		public static Builder createError(String physicalResourceId, String responseReason) {
+			if (physicalResourceId == null || physicalResourceId.trim().length() == 0) {
+				throw new IllegalArgumentException("PhysicalResourceId is required");
+			} else if (responseReason == null || responseReason.trim().length() == 0) {
 				throw new IllegalArgumentException("Reason is required");
 			}
 
-			return new Builder(ResponseStatus.FAILED, responseReason);
+			return new Builder(ResponseStatus.FAILED, responseReason, physicalResourceId);
 		}
 
 		/**
@@ -153,12 +171,12 @@ public class CustomResourceUpdateResponse {
 		 * 
 		 * @return the response
 		 */
-		public CustomResourceUpdateResponse build() {
+		public CustomResourceResponseCreate build() {
 			Map<String, String> dataStringMap = new TreeMap<String, String>();
 			dataStringMap.putAll(this.dataString);
 
-			return new CustomResourceUpdateResponse(responseStatus, responseReason, responseNoEcho,
-					Collections.unmodifiableMap(dataStringMap));
+			return new CustomResourceResponseCreate(responseStatus, responseReason, responsePhysicalResourceId,
+					responseNoEcho, Collections.unmodifiableMap(dataStringMap));
 		}
 	}
 }
