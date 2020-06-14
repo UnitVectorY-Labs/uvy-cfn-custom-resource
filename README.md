@@ -54,3 +54,11 @@ public class ExampleHandler extends AbstractCustomResourceHandler {
 }
 ```
 
+Dependencies
+------------
+
+This library is intended to be light weight, but it uses some libraries itself to accomplish the task.
+
+ - [com.amazonaws.aws-lambda-java-core](https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-core) for the Lambda handler
+ - [org.json.json](https://mvnrepository.com/artifact/org.json/json) for parsing and constructing JSON
+

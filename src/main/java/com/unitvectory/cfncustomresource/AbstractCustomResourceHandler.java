@@ -22,10 +22,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public abstract class AbstractCustomResourceHandler implements RequestStreamHandler {
 
@@ -46,51 +47,52 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 	public final void handleRequest(InputStream inputStream, OutputStream outputStream, Context context)
 			throws IOException {
 
-		JsonNode inputNode = UvyJacksonHelper.MAPPER.readTree(inputStream);
+		// Read InputStream into the JSONObject
+		JSONObject inputNode = new JSONObject(new JSONTokener(inputStream));
 
 		// The request type is set by the AWS CloudFormation stack operation
 		// (create-stack, update-stack, or delete-stack) that was initiated by the
 		// template developer for the stack that contains the custom resource.
-		final RequestType requestType = RequestType.valueOf(JsonHelper.tryGetString(inputNode, "RequestType"));
+		final RequestType requestType = RequestType.valueOf(inputNode.optString("RequestType", null));
 
 		// The response URL identifies a presigned S3 bucket that receives responses
 		// from the custom resource provider to AWS CloudFormation.
-		final String responseURL = JsonHelper.tryGetString(inputNode, "ResponseURL");
+		final String responseURL = inputNode.optString("ResponseURL", null);
 
 		// The Amazon Resource Name (ARN) that identifies the stack that contains the
 		// custom resource.
 		// Combining the StackId with the RequestId forms a value that you can use to
 		// uniquely identify a request on a particular custom resource.
-		final String stackId = JsonHelper.tryGetString(inputNode, "StackId");
+		final String stackId = inputNode.optString("StackId", null);
 
 		// A unique ID for the request.
 		// Combining the StackId with the RequestId forms a value that you can use to
 		// uniquely identify a request on a particular custom resource.
-		final String requestId = JsonHelper.tryGetString(inputNode, "RequestId");
+		final String requestId = inputNode.optString("RequestId", null);
 
 		// The template developer-chosen resource type of the custom resource in the AWS
 		// CloudFormation template. Custom resource type names can be up to 60
 		// characters long and can include alphanumeric and the following characters:
 		// _@-.
-		final String resourceType = JsonHelper.tryGetString(inputNode, "ResourceType");
+		final String resourceType = inputNode.optString("ResourceType", null);
 
 		// The template developer-chosen name (logical ID) of the custom resource in the
 		// AWS CloudFormation template. This is provided to facilitate communication
 		// between the custom resource provider and the template developer.
-		final String logicalResourceId = JsonHelper.tryGetString(inputNode, "LogicalResourceId");
+		final String logicalResourceId = inputNode.optString("LogicalResourceId", null);
 
 		// A required custom resource provider-defined physical ID that is unique for
 		// that provider.
 		// Required: Always sent with Update and Delete requests; never sent with
 		// Create.
-		final String physicalResourceId = JsonHelper.tryGetString(inputNode, "PhysicalResourceId");
+		final String physicalResourceId = inputNode.optString("PhysicalResourceId", null);
 
 		// This field contains the contents of the Properties object sent by the
 		// template developer. Its contents are defined by the custom resource provider.
 		// ResourceProperties (object)
 		final CustomResourceRequestProperties customResourceRequestProperties;
 		if (inputNode.has("ResourceProperties")) {
-			JsonNode resourceProperties = inputNode.get("ResourceProperties");
+			JSONObject resourceProperties = inputNode.getJSONObject("ResourceProperties");
 			customResourceRequestProperties = new CustomResourceRequestProperties(resourceProperties);
 		} else {
 			customResourceRequestProperties = new CustomResourceRequestProperties();
@@ -101,7 +103,7 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 		// OldResourceProperties (object)
 		final CustomResourceRequestProperties customResourceRequestOldProperties;
 		if (inputNode.has("OldResourceProperties")) {
-			JsonNode oldResourceProperties = inputNode.get("OldResourceProperties");
+			JSONObject oldResourceProperties = inputNode.getJSONObject("OldResourceProperties");
 			customResourceRequestOldProperties = new CustomResourceRequestProperties(oldResourceProperties);
 		} else {
 			customResourceRequestOldProperties = new CustomResourceRequestProperties();
@@ -225,7 +227,7 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 
 		// Build the response
 
-		ObjectNode response = UvyJacksonHelper.MAPPER.createObjectNode();
+		JSONObject response = new JSONObject();
 
 		// The status value sent by the custom resource provider in response to an AWS
 		// CloudFormation-generated request.
@@ -297,13 +299,13 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 		// Required: No
 		// Type: JSON object
 		if (responseDataString != null && responseDataString.size() > 0) {
-			ObjectNode data = UvyJacksonHelper.MAPPER.createObjectNode();
+			JSONObject data = new JSONObject();
 
 			for (Entry<String, String> entry : responseDataString.entrySet()) {
 				data.put(entry.getKey(), entry.getValue());
 			}
 
-			response.set("Data", data);
+			response.put("Data", data);
 		}
 
 		// There was an unexpected exception, log it
@@ -313,7 +315,7 @@ public abstract class AbstractCustomResourceHandler implements RequestStreamHand
 		}
 
 		// Write the response JSON to S3
-		String json = UvyJacksonHelper.toJson(response);
+		String json = response.toString();
 		cloudFormationResult.putFile(responseURL, json);
 	}
 

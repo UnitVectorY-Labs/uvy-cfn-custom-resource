@@ -15,42 +15,26 @@
  */
 package com.unitvectory.cfncustomresource;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 class CloudFormationResultClient implements CloudFormationResult {
 
-	private final CloseableHttpClient httpclient;
-
 	CloudFormationResultClient() {
-		httpclient = HttpClients.createDefault();
 	}
 
 	@Override
-	public void putFile(String responseURL, String json) {
-		CloseableHttpResponse httpResponse = null;
+	public void putFile(String responseURL, String responseJson) {
 		try {
-			HttpPut httpPut = new HttpPut(responseURL);
-			httpPut.setHeader("Accept", "application/json");
-			httpPut.setHeader("Content-type", "application/json");
-
-			StringEntity stringEntity = new StringEntity(json);
-			httpPut.setEntity(stringEntity);
-
-			httpResponse = httpclient.execute(httpPut);
+			URL url = new URL(responseURL);
+			HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
+			httpConnection.setRequestMethod("PUT");
+			OutputStreamWriter out = new OutputStreamWriter(httpConnection.getOutputStream());
+			out.write(responseJson);
+			out.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
-		} finally {
-			if (httpResponse != null) {
-				try {
-					httpResponse.close();
-				} catch (Exception e) {
-					// ignore
-				}
-			}
 		}
 	}
 
