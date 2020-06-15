@@ -47,8 +47,15 @@ public abstract class CustomResourceHandler implements RequestStreamHandler {
 	public final void handleRequest(InputStream inputStream, OutputStream outputStream, Context context)
 			throws IOException {
 
+		final boolean printRequest = this.printRequest();
+		final boolean printResponse = this.printResponse();
+
 		// Read InputStream into the JSONObject
 		JSONObject inputNode = new JSONObject(new JSONTokener(inputStream));
+
+		if (printRequest) {
+			System.out.println(inputNode.toString());
+		}
 
 		// The request type is set by the AWS CloudFormation stack operation
 		// (create-stack, update-stack, or delete-stack) that was initiated by the
@@ -316,7 +323,38 @@ public abstract class CustomResourceHandler implements RequestStreamHandler {
 
 		// Write the response JSON to S3
 		String json = response.toString();
+
+		if (printResponse) {
+			System.out.println(json);
+		}
+
 		cloudFormationResult.putFile(responseURL, json);
+	}
+
+	/**
+	 * Provides an override hook for allowing the request to be printed out to the
+	 * console.
+	 * 
+	 * By default this returns false, but by overriding and returning true, the JSON
+	 * request for the custom resource will be printed to the console.
+	 * 
+	 * @return true to print request JSON; otherwise false
+	 */
+	public boolean printRequest() {
+		return false;
+	}
+
+	/**
+	 * Provide an override hook for allowing the response to be printed out to the
+	 * console.
+	 * 
+	 * By default this returns false, but by overriding and returning true, the JSON
+	 * response for the custom resource will be printed to the console.
+	 * 
+	 * @return true to print response JSON; otherwise false
+	 */
+	public boolean printResponse() {
+		return false;
 	}
 
 	/**
