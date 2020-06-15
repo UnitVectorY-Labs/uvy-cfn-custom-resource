@@ -34,6 +34,7 @@ class CustomResourceOutcomeUrl implements CustomResourceOutcome {
 			OutputStreamWriter out = new OutputStreamWriter(httpConnection.getOutputStream());
 			out.write(responseJson);
 			out.close();
+			int responseCode = httpConnection.getResponseCode();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
