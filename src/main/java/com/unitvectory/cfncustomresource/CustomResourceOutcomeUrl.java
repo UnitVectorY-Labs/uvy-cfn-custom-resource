@@ -29,6 +29,7 @@ class CustomResourceOutcomeUrl implements CustomResourceOutcome {
 		try {
 			URL url = new URL(responseURL);
 			HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
+			httpConnection.setDoOutput(true);
 			httpConnection.setRequestMethod("PUT");
 			OutputStreamWriter out = new OutputStreamWriter(httpConnection.getOutputStream());
 			out.write(responseJson);
