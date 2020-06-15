@@ -30,18 +30,18 @@ import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 
 public abstract class CustomResourceHandler implements RequestStreamHandler {
 
-	private final CustomResourceOutcome cloudFormationResult;
+	private final CustomResourceOutcome customResourceOutcome;
 
 	public CustomResourceHandler() {
-		this.cloudFormationResult = new CustomResourceOutcomeUrl();
+		this.customResourceOutcome = new CustomResourceOutcomeUrl();
 	}
 
-	public CustomResourceHandler(CustomResourceOutcome cloudFormationResult) {
-		if (cloudFormationResult == null) {
-			throw new IllegalArgumentException("cloudFormationResult must not be null");
+	public CustomResourceHandler(CustomResourceOutcome customResourceOutcome) {
+		if (customResourceOutcome == null) {
+			throw new IllegalArgumentException("customResourceOutcome must not be null");
 		}
 
-		this.cloudFormationResult = cloudFormationResult;
+		this.customResourceOutcome = customResourceOutcome;
 	}
 
 	public final void handleRequest(InputStream inputStream, OutputStream outputStream, Context context)
@@ -328,7 +328,7 @@ public abstract class CustomResourceHandler implements RequestStreamHandler {
 			System.out.println(json);
 		}
 
-		cloudFormationResult.putFile(responseURL, json);
+		customResourceOutcome.putFile(responseURL, json);
 	}
 
 	/**
