@@ -39,7 +39,7 @@ public class CustomResourceRequestProperties {
 	 * @param key
 	 * @return
 	 */
-	public String getStringProperty(String key) {
+	public final String getStringProperty(String key) {
 		if (this.resourceProperties == null) {
 			return null;
 		}

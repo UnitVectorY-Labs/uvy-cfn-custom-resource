@@ -74,7 +74,7 @@ public class CustomResourceResponseDelete {
 		 * 
 		 * @return the response
 		 */
-		public CustomResourceResponseDelete build() {
+		public final CustomResourceResponseDelete build() {
 			return new CustomResourceResponseDelete(responseStatus, responseReason);
 		}
 	}

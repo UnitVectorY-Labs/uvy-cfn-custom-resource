@@ -105,7 +105,7 @@ public class CustomResourceResponseUpdate {
 		 * 
 		 * @return the builder
 		 */
-		public Builder withNoEcho() {
+		public final Builder withNoEcho() {
 			if (!ResponseStatus.SUCCESS.equals(this.responseStatus)) {
 				throw new IllegalStateException("Only allowed for SUCCESS");
 			}
@@ -130,7 +130,7 @@ public class CustomResourceResponseUpdate {
 		 *            the property value
 		 * @return the builder
 		 */
-		public Builder withDataString(String key, String value) {
+		public final Builder withDataString(String key, String value) {
 			if (!ResponseStatus.SUCCESS.equals(this.responseStatus)) {
 				throw new IllegalStateException("Only allowed for SUCCESS");
 			}
@@ -153,7 +153,7 @@ public class CustomResourceResponseUpdate {
 		 * 
 		 * @return the response
 		 */
-		public CustomResourceResponseUpdate build() {
+		public final CustomResourceResponseUpdate build() {
 			Map<String, String> dataStringMap = new TreeMap<String, String>();
 			dataStringMap.putAll(this.dataString);
 
