@@ -3,6 +3,8 @@ uvy-cfn-custom-resource
 
 Java library to make AWS Lambda function for CloudFormation custom resources
 
+[![](https://jitci.com/gh/UnitVectorY-Labs/uvy-cfn-custom-resource/svg)](https://jitci.com/gh/UnitVectorY-Labs/uvy-cfn-custom-resource)
+
 AWS CloudFormation provides for the creation of [custom resources](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources.html) to extend and enhance the capabilities of CloudFormation.
 These resources can be implemented using AWS Lambda as [Lambda-backed custom resources](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources-lambda.html).
 AWS provides an official [cfn-response module](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-lambda-function-code-cfnresponsemodule.html) for Node.js implementations.
