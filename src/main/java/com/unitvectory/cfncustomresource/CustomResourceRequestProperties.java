@@ -15,6 +15,9 @@
  */
 package com.unitvectory.cfncustomresource;
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.json.JSONObject;
 
 /**
@@ -31,6 +34,10 @@ public class CustomResourceRequestProperties {
 
 	CustomResourceRequestProperties(JSONObject resourceProperties) {
 		this.resourceProperties = resourceProperties;
+	}
+
+	final Set<String> getKeys() {
+		return Collections.unmodifiableSet(this.resourceProperties.keySet());
 	}
 
 	/**

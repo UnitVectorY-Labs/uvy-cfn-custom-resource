@@ -1,0 +1,23 @@
+{
+  "failed": true,
+  "input": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:012345678912:function:myfunction",
+    "LogicalResourceId": "MyCustomResource",
+    "RequestId": "cc9fb8f5-0f41-46b6-833f-9e5d78216785",
+    "ResponseURL": "https://example.com/testurl",
+    "ResourceType": "Custom::MyResource",
+    "ResourceProperties": {
+        "ServiceToken": "arn:aws:lambda:us-east-1:012345678912:function:myfunction"
+    },
+    "RequestType": "Create",
+    "StackId": "arn:aws:cloudformation:us-east-1:012345678912:stack/mystack/92f20a76-97bd-42ab-9494-564e6766316f"
+  },
+  "expectedOutput": {
+    "Status": "FAILED",
+    "Reason": "failed",
+    "LogicalResourceId": "MyCustomResource",
+    "RequestId": "cc9fb8f5-0f41-46b6-833f-9e5d78216785",
+    "PhysicalResourceId": "testResourceId",
+    "StackId": "arn:aws:cloudformation:us-east-1:012345678912:stack/mystack/92f20a76-97bd-42ab-9494-564e6766316f"
+  }
+}
