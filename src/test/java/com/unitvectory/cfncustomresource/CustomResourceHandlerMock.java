@@ -20,7 +20,18 @@ public class CustomResourceHandlerMock extends CustomResourceHandler {
 		String physicalResourceId = "testResourceId";
 
 		if (success) {
-			return CustomResourceResponseCreate.Builder.createSuccess(physicalResourceId).build();
+			CustomResourceResponseCreate.Builder builder = CustomResourceResponseCreate.Builder
+					.createSuccess(physicalResourceId);
+
+			for (String key : customResourceRequestProperties.getKeys()) {
+				if ("ServiceToken".equals(key)) {
+					continue;
+				}
+
+				builder.withDataString(key, customResourceRequestProperties.getStringProperty(key));
+			}
+
+			return builder.build();
 		} else {
 			return CustomResourceResponseCreate.Builder.createError(physicalResourceId, "failed").build();
 		}
@@ -32,7 +43,17 @@ public class CustomResourceHandlerMock extends CustomResourceHandler {
 			CustomResourceRequestProperties customResourceRequestOldProperties) {
 
 		if (success) {
-			return CustomResourceResponseUpdate.Builder.createSuccess().build();
+			CustomResourceResponseUpdate.Builder builder = CustomResourceResponseUpdate.Builder.createSuccess();
+
+			for (String key : customResourceRequestProperties.getKeys()) {
+				if ("ServiceToken".equals(key)) {
+					continue;
+				}
+
+				builder.withDataString(key, customResourceRequestProperties.getStringProperty(key));
+			}
+
+			return builder.build();
 		} else {
 			return CustomResourceResponseUpdate.Builder.createError("failed").build();
 		}
