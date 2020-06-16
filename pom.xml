@@ -7,7 +7,25 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>uvy-cfn-custom-resource</name>
+	<description>Java library to make AWS Lambda function for CloudFormation custom resources</description>
 	<url>https://github.com/UnitVectorY-Labs/uvy-cfn-custom-resource</url>
+	<inceptionYear>2020</inceptionYear>
+	
+	<organization>
+		<name>UnitVectorY Labs</name>
+		<url>https://github.com/UnitVectorY-Labs</url>
+	</organization>
+	
+	<issueManagement>
+		<url>https://github.com/UnitVectorY-Labs/uvy-cfn-custom-resource/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
+	
+	<scm>
+		<url>https://github.com/UnitVectorY-Labs/uvy-cfn-custom-resource</url>
+		<connection>scm:git:git://github.com/UnitVectorY-Labs/uvy-cfn-custom-resource.git</connection>
+		<developerConnection>scm:git:git@github.com:UnitVectorY-Labs/uvy-cfn-custom-resource.git</developerConnection>
+	</scm>
 	
 	<licenses>
 		<license>
@@ -17,6 +35,14 @@
 			<comments>A business-friendly OSS license</comments>
 		</license>
 	</licenses>
+	
+	<developers>
+		<developer>
+			<name>Jared Hatfield</name>
+			<url>https://github.com/JaredHatfield</url>
+			<id>JaredHatfield</id>
+		</developer>
+	</developers>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
