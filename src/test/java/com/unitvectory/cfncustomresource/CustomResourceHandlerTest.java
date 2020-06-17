@@ -45,9 +45,10 @@ public class CustomResourceHandlerTest {
 
 	private final String filePath;
 
-	public CustomResourceHandlerTest(String filePath) {
+	public CustomResourceHandlerTest(String name, String filePath) {
 		this.customResourceOutcomeTestClient = new CustomResourceOutcomeTestClient();
-		this.customResourceHandler = new CustomResourceHandlerMock(this.customResourceOutcomeTestClient);
+		this.customResourceHandler = new CustomResourceHandlerMock(CustomResourceConfig.Builder.create()
+				.withCustomResourceOutcome(this.customResourceOutcomeTestClient).build());
 		this.filePath = filePath;
 	}
 
@@ -64,7 +65,7 @@ public class CustomResourceHandlerTest {
 				continue;
 			}
 
-			data.add(new Object[] { file.getAbsolutePath() });
+			data.add(new Object[] { file.getName(), file.getAbsolutePath() });
 		}
 
 		return data;

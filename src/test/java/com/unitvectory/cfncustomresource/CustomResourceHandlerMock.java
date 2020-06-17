@@ -21,8 +21,8 @@ public class CustomResourceHandlerMock extends CustomResourceHandler {
 
 	private boolean noEcho;
 
-	public CustomResourceHandlerMock(CustomResourceOutcome customResourceOutcome) {
-		super(customResourceOutcome);
+	public CustomResourceHandlerMock(CustomResourceConfig customResourceConfig) {
+		super(customResourceConfig);
 		this.success = true;
 		this.noEcho = false;
 	}

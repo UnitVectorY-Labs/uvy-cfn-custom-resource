@@ -19,9 +19,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-class CustomResourceOutcomeUrl implements CustomResourceOutcome {
+class CustomResourceOutcomeUrlConnection implements CustomResourceOutcome {
 
-	CustomResourceOutcomeUrl() {
+	CustomResourceOutcomeUrlConnection() {
 	}
 
 	@Override

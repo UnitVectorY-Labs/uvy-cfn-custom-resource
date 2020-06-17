@@ -30,30 +30,27 @@ import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 
 public abstract class CustomResourceHandler implements RequestStreamHandler {
 
-	private final CustomResourceOutcome customResourceOutcome;
+	private final CustomResourceConfig customResourceConfig;
 
 	public CustomResourceHandler() {
-		this.customResourceOutcome = new CustomResourceOutcomeUrl();
+		this.customResourceConfig = CustomResourceConfig.Builder.create().build();
 	}
 
-	public CustomResourceHandler(CustomResourceOutcome customResourceOutcome) {
-		if (customResourceOutcome == null) {
-			throw new IllegalArgumentException("customResourceOutcome must not be null");
+	public CustomResourceHandler(CustomResourceConfig customResourceConfig) {
+		if (customResourceConfig == null) {
+			throw new IllegalArgumentException("customResourceConfig must not be null");
 		}
 
-		this.customResourceOutcome = customResourceOutcome;
+		this.customResourceConfig = customResourceConfig;
 	}
 
 	public final void handleRequest(InputStream inputStream, OutputStream outputStream, Context context)
 			throws IOException {
 
-		final boolean printRequest = this.printRequest();
-		final boolean printResponse = this.printResponse();
-
 		// Read InputStream into the JSONObject
 		JSONObject inputNode = new JSONObject(new JSONTokener(inputStream));
 
-		if (printRequest) {
+		if (this.customResourceConfig.isPrintRequest()) {
 			System.out.println(inputNode.toString());
 		}
 
@@ -324,37 +321,11 @@ public abstract class CustomResourceHandler implements RequestStreamHandler {
 		// Write the response JSON to S3
 		String json = response.toString();
 
-		if (printResponse) {
+		if (this.customResourceConfig.isPrintResponse()) {
 			System.out.println(json);
 		}
 
-		customResourceOutcome.putFile(responseURL, json);
-	}
-
-	/**
-	 * Provides an override hook for allowing the request to be printed out to the
-	 * console.
-	 * 
-	 * By default this returns false, but by overriding and returning true, the JSON
-	 * request for the custom resource will be printed to the console.
-	 * 
-	 * @return true to print request JSON; otherwise false
-	 */
-	public boolean printRequest() {
-		return false;
-	}
-
-	/**
-	 * Provide an override hook for allowing the response to be printed out to the
-	 * console.
-	 * 
-	 * By default this returns false, but by overriding and returning true, the JSON
-	 * response for the custom resource will be printed to the console.
-	 * 
-	 * @return true to print response JSON; otherwise false
-	 */
-	public boolean printResponse() {
-		return false;
+		this.customResourceConfig.getCustomResourceOutcome().putFile(responseURL, json);
 	}
 
 	/**
