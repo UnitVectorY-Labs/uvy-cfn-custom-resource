@@ -85,6 +85,10 @@ public class CustomResourceHandlerTest {
 			this.customResourceHandler.setFail();
 		}
 
+		if (testJson.optBoolean("noEcho", false)) {
+			this.customResourceHandler.setNoEcho();
+		}
+
 		assertTrue("test file must have \"input\" object", testJson.has("input"));
 		JSONObject input = testJson.getJSONObject("input");
 

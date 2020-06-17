@@ -19,13 +19,20 @@ public class CustomResourceHandlerMock extends CustomResourceHandler {
 
 	private boolean success;
 
+	private boolean noEcho;
+
 	public CustomResourceHandlerMock(CustomResourceOutcome customResourceOutcome) {
 		super(customResourceOutcome);
 		this.success = true;
+		this.noEcho = false;
 	}
 
 	public void setFail() {
 		this.success = false;
+	}
+
+	public void setNoEcho() {
+		this.noEcho = true;
 	}
 
 	@Override
@@ -37,6 +44,10 @@ public class CustomResourceHandlerMock extends CustomResourceHandler {
 		if (success) {
 			CustomResourceResponseCreate.Builder builder = CustomResourceResponseCreate.Builder
 					.createSuccess(physicalResourceId);
+
+			if (this.noEcho) {
+				builder.withNoEcho();
+			}
 
 			for (String key : customResourceRequestProperties.getKeys()) {
 				if ("ServiceToken".equals(key)) {
@@ -59,6 +70,10 @@ public class CustomResourceHandlerMock extends CustomResourceHandler {
 
 		if (success) {
 			CustomResourceResponseUpdate.Builder builder = CustomResourceResponseUpdate.Builder.createSuccess();
+
+			if (this.noEcho) {
+				builder.withNoEcho();
+			}
 
 			for (String key : customResourceRequestProperties.getKeys()) {
 				if ("ServiceToken".equals(key)) {
