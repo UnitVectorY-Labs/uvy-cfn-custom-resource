@@ -30,12 +30,15 @@ public class CustomResourceResponseUpdate {
 
 	private final Map<String, String> dataString;
 
-	private CustomResourceResponseUpdate(ResponseStatus responseStatus, String responseReason, Boolean responseNoEcho,
-			Map<String, String> dataString) {
-		this.responseStatus = responseStatus;
-		this.responseReason = responseReason;
-		this.responseNoEcho = responseNoEcho;
-		this.dataString = dataString;
+	private CustomResourceResponseUpdate(Builder builder) {
+		this.responseStatus = builder.responseStatus;
+		this.responseReason = builder.responseReason;
+		this.responseNoEcho = builder.responseNoEcho;
+
+		Map<String, String> dataStringMap = new TreeMap<String, String>();
+		dataStringMap.putAll(builder.dataString);
+
+		this.dataString = Collections.unmodifiableMap(dataStringMap);
 	}
 
 	final ResponseStatus getResponseStatus() {
@@ -154,11 +157,8 @@ public class CustomResourceResponseUpdate {
 		 * @return the response
 		 */
 		public final CustomResourceResponseUpdate build() {
-			Map<String, String> dataStringMap = new TreeMap<String, String>();
-			dataStringMap.putAll(this.dataString);
 
-			return new CustomResourceResponseUpdate(responseStatus, responseReason, responseNoEcho,
-					Collections.unmodifiableMap(dataStringMap));
+			return new CustomResourceResponseUpdate(this);
 		}
 	}
 }

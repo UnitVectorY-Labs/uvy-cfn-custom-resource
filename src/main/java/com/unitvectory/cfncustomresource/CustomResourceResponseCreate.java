@@ -32,13 +32,16 @@ public class CustomResourceResponseCreate {
 
 	private final Map<String, String> dataString;
 
-	private CustomResourceResponseCreate(ResponseStatus responseStatus, String responseReason,
-			String responsePhysicalResourceId, Boolean responseNoEcho, Map<String, String> dataString) {
-		this.responseStatus = responseStatus;
-		this.responseReason = responseReason;
-		this.responsePhysicalResourceId = responsePhysicalResourceId;
-		this.responseNoEcho = responseNoEcho;
-		this.dataString = dataString;
+	private CustomResourceResponseCreate(Builder builder) {
+		this.responseStatus = builder.responseStatus;
+		this.responseReason = builder.responseReason;
+		this.responsePhysicalResourceId = builder.responsePhysicalResourceId;
+		this.responseNoEcho = builder.responseNoEcho;
+
+		Map<String, String> dataStringMap = new TreeMap<String, String>();
+		dataStringMap.putAll(builder.dataString);
+
+		this.dataString = Collections.unmodifiableMap(dataStringMap);
 	}
 
 	final ResponseStatus getResponseStatus() {
@@ -172,11 +175,7 @@ public class CustomResourceResponseCreate {
 		 * @return the response
 		 */
 		public final CustomResourceResponseCreate build() {
-			Map<String, String> dataStringMap = new TreeMap<String, String>();
-			dataStringMap.putAll(this.dataString);
-
-			return new CustomResourceResponseCreate(responseStatus, responseReason, responsePhysicalResourceId,
-					responseNoEcho, Collections.unmodifiableMap(dataStringMap));
+			return new CustomResourceResponseCreate(this);
 		}
 	}
 }

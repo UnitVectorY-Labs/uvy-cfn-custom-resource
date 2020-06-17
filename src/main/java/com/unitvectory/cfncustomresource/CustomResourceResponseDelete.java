@@ -21,9 +21,9 @@ public class CustomResourceResponseDelete {
 
 	private final String responseReason;
 
-	private CustomResourceResponseDelete(ResponseStatus responseStatus, String responseReason) {
-		this.responseStatus = responseStatus;
-		this.responseReason = responseReason;
+	private CustomResourceResponseDelete(Builder builder) {
+		this.responseStatus = builder.responseStatus;
+		this.responseReason = builder.responseReason;
 	}
 
 	final ResponseStatus getResponseStatus() {
@@ -75,7 +75,7 @@ public class CustomResourceResponseDelete {
 		 * @return the response
 		 */
 		public final CustomResourceResponseDelete build() {
-			return new CustomResourceResponseDelete(responseStatus, responseReason);
+			return new CustomResourceResponseDelete(this);
 		}
 	}
 }

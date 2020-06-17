@@ -23,11 +23,10 @@ public class CustomResourceConfig {
 
 	private final boolean printResponse;
 
-	private CustomResourceConfig(CustomResourceOutcome customResourceOutcome, boolean printRequest,
-			boolean printResponse) {
-		this.customResourceOutcome = customResourceOutcome;
-		this.printRequest = printRequest;
-		this.printResponse = printResponse;
+	private CustomResourceConfig(Builder builder) {
+		this.customResourceOutcome = builder.customResourceOutcome;
+		this.printRequest = builder.printRequest;
+		this.printResponse = builder.printResponse;
 	}
 
 	final CustomResourceOutcome getCustomResourceOutcome() {
@@ -108,7 +107,7 @@ public class CustomResourceConfig {
 		 * @return the config
 		 */
 		public CustomResourceConfig build() {
-			return new CustomResourceConfig(customResourceOutcome, printRequest, printResponse);
+			return new CustomResourceConfig(this);
 		}
 	}
 }
