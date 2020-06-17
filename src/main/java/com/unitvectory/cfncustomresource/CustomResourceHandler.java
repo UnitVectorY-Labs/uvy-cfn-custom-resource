@@ -32,10 +32,22 @@ public abstract class CustomResourceHandler implements RequestStreamHandler {
 
 	private final CustomResourceConfig customResourceConfig;
 
+	/**
+	 * Creates a new instance of the CustomResourceHandler
+	 */
 	public CustomResourceHandler() {
 		this.customResourceConfig = CustomResourceConfig.Builder.create().build();
 	}
 
+	/**
+	 * Creates a new instance of the CustomResourceHandler
+	 * 
+	 * This is intended to be overridden by an implementing constructor that takes
+	 * no parameters as the super construct to allow behaviors to be configured.
+	 * 
+	 * @param customResourceConfig
+	 *            the CustomResourceConfig; must not be null
+	 */
 	public CustomResourceHandler(CustomResourceConfig customResourceConfig) {
 		if (customResourceConfig == null) {
 			throw new IllegalArgumentException("customResourceConfig must not be null");

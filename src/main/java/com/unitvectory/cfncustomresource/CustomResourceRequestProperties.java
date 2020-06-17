@@ -44,7 +44,8 @@ public class CustomResourceRequestProperties {
 	 * Get a string property by name.
 	 * 
 	 * @param key
-	 * @return
+	 *            the property key
+	 * @return the property value; null if not set
 	 */
 	public final String getStringProperty(String key) {
 		if (this.resourceProperties == null) {

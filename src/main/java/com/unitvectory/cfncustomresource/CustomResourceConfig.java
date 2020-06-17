@@ -69,7 +69,7 @@ public class CustomResourceConfig {
 		 * Use a CustomResourceOutcome to override how the JSON file is uploaded to S3.
 		 * 
 		 * @param customResourceOutcome
-		 *            the CustomResourceOutcome
+		 *            the CustomResourceOutcome; must not be null
 		 * @return the builder
 		 */
 		public Builder withCustomResourceOutcome(CustomResourceOutcome customResourceOutcome) {

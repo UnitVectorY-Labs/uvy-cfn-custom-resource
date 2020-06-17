@@ -87,6 +87,7 @@ public class CustomResourceResponseCreate {
 		 * Create a new successful response
 		 * 
 		 * @param physicalResourceId
+		 *            the physicalResourceId; must not be null
 		 * @return the builder
 		 */
 		public static Builder createSuccess(String physicalResourceId) {
@@ -101,8 +102,9 @@ public class CustomResourceResponseCreate {
 		 * Create a new error response
 		 * 
 		 * @param physicalResourceId
+		 *            the physicalResourceId; must not be null
 		 * @param responseReason
-		 *            required error reason
+		 *            required error reason; must not be null
 		 * @return the builder
 		 */
 		public static Builder createError(String physicalResourceId, String responseReason) {
