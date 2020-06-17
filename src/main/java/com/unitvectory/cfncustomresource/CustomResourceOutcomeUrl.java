@@ -35,6 +35,9 @@ class CustomResourceOutcomeUrl implements CustomResourceOutcome {
 			out.write(responseJson);
 			out.close();
 			int responseCode = httpConnection.getResponseCode();
+			if (responseCode != 200) {
+				throw new RuntimeException(httpConnection.getResponseMessage());
+			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
