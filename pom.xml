@@ -4,7 +4,7 @@
 
 	<groupId>com.unitvectory</groupId>
 	<artifactId>cfncustomresource</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>uvy-cfn-custom-resource</name>
 	<description>Java library to make AWS Lambda function for CloudFormation custom resources</description>
