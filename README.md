@@ -148,8 +148,39 @@ public class ExampleHandler extends CustomResourceHandler {
 }
 ```
 
-Dependencies
-------------
+Dependency
+----------
+
+uvy-cfn-custom-resource is available on [**jitpack.io**](https://jitpack.io/#UnitVectorY-Labs/uvy-cfn-custom-resource)
+
+For Maven dependency, add the JitPack repository
+
+```xml
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+```
+
+Then include the dependency.
+
+```xml
+	<dependencies>
+		<dependency>
+			<groupId>com.github.unitvectory-labs</groupId>
+			<artifactId>uvy-cfn-custom-resource</artifactId>
+			<version>v0.1.0</version>
+		</dependency>
+	</dependencies>
+```
+
+Note: when using JitPack, the dependency groupId, artificatId, and version match the GitHub organization, repository, and release and not those found in the POM file found in this repository.
+
+
+Libraries
+---------
 
 This library is intended to be light weight, but it uses some libraries itself to accomplish the task.
 
