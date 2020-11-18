@@ -85,8 +85,7 @@ public class CustomResourceResponseUpdate {
 		/**
 		 * Create a new error response
 		 * 
-		 * @param responseReason
-		 *            required error reason; must not be null
+		 * @param responseReason required error reason; must not be null
 		 * @return the builder
 		 */
 		public static Builder createError(String responseReason) {
@@ -127,10 +126,8 @@ public class CustomResourceResponseUpdate {
 		 * 
 		 * Only allowed to be used on successful responses.
 		 * 
-		 * @param key
-		 *            the property name
-		 * @param value
-		 *            the property value
+		 * @param key   the property name
+		 * @param value the property value
 		 * @return the builder
 		 */
 		public final Builder withDataString(String key, String value) {

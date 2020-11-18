@@ -57,8 +57,7 @@ public class CustomResourceResponseDelete {
 		/**
 		 * Create a new error response
 		 * 
-		 * @param responseReason
-		 *            required error reason; must not be null
+		 * @param responseReason required error reason; must not be null
 		 * @return the builder
 		 */
 		public static Builder createError(String responseReason) {

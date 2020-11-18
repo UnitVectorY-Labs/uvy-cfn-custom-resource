@@ -45,8 +45,7 @@ public abstract class CustomResourceHandler implements RequestStreamHandler {
 	 * This is intended to be overridden by an implementing constructor that takes
 	 * no parameters as the super construct to allow behaviors to be configured.
 	 * 
-	 * @param customResourceConfig
-	 *            the CustomResourceConfig; must not be null
+	 * @param customResourceConfig the CustomResourceConfig; must not be null
 	 */
 	public CustomResourceHandler(CustomResourceConfig customResourceConfig) {
 		if (customResourceConfig == null) {

@@ -86,8 +86,7 @@ public class CustomResourceResponseCreate {
 		/**
 		 * Create a new successful response
 		 * 
-		 * @param physicalResourceId
-		 *            the physicalResourceId; must not be null
+		 * @param physicalResourceId the physicalResourceId; must not be null
 		 * @return the builder
 		 */
 		public static Builder createSuccess(String physicalResourceId) {
@@ -101,10 +100,8 @@ public class CustomResourceResponseCreate {
 		/**
 		 * Create a new error response
 		 * 
-		 * @param physicalResourceId
-		 *            the physicalResourceId; must not be null
-		 * @param responseReason
-		 *            required error reason; must not be null
+		 * @param physicalResourceId the physicalResourceId; must not be null
+		 * @param responseReason     required error reason; must not be null
 		 * @return the builder
 		 */
 		public static Builder createError(String physicalResourceId, String responseReason) {
@@ -147,10 +144,8 @@ public class CustomResourceResponseCreate {
 		 * 
 		 * Only allowed to be used on successful responses.
 		 * 
-		 * @param key
-		 *            the property name
-		 * @param value
-		 *            the property value
+		 * @param key   the property name
+		 * @param value the property value
 		 * @return the builder
 		 */
 		public final Builder withDataString(String key, String value) {

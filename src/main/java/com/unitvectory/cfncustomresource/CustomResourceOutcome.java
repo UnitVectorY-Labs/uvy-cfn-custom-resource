@@ -20,10 +20,8 @@ public interface CustomResourceOutcome {
 	/**
 	 * Upload the file to S3 for CloudFormation to process.
 	 * 
-	 * @param responseURL
-	 *            the signed S3 URL provided by CloudFormation
-	 * @param responseJson
-	 *            the JSON response to upload
+	 * @param responseURL  the signed S3 URL provided by CloudFormation
+	 * @param responseJson the JSON response to upload
 	 */
 	void putFile(String responseURL, String responseJson);
 }
